@@ -142,17 +142,17 @@ interface TableColumn<T = any> {
 # Build the vikram-tables library
 ng build vikram-tables
 
-# Build the demo application
-ng build demo-app
+# Build the root application (with demo)
+ng build
 ```
 
 ### Running the Demo
 
 ```bash
-# Start the demo application
+# Start the demo application (serves the root app with vikram-tables demo)
 npm start
 # or
-ng serve demo-app
+ng serve
 ```
 
 Navigate to `http://localhost:4200` to see the demo.
@@ -163,8 +163,8 @@ Navigate to `http://localhost:4200` to see the demo.
 # Test the library
 ng test vikram-tables
 
-# Test the demo app
-ng test demo-app
+# Test the root app
+ng test
 ```
 
 ## Contributing

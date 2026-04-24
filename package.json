@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve demo-app",
-    "build": "ng build demo-app",
-    "watch": "ng build demo-app --watch --configuration development",
-    "test": "ng test demo-app"
+    "start": "ng serve",
+    "build": "ng build vikram-tables",
+    "watch": "ng build vikram-tables --watch --configuration development",
+    "test": "ng test vikram-tables"
   },
   "private": true,
   "dependencies": {
