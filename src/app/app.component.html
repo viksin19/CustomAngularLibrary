@@ -1,0 +1,23 @@
+<main class="demo-shell">
+  <section class="demo-card">
+    <header class="demo-header">
+      <h1>{{ title }}</h1>
+      <p>Demonstrating the vikram-tables library with sorting, filtering, and pagination.</p>
+    </header>
+
+    <vikram-tables
+      [data]="tableData"
+      [columns]="tableColumns"
+      [pageSizeOptions]="[5, 10, 20]"
+      [defaultPageSize]="5"
+      [enableGlobalSearch]="true"
+      [enableColumnFilters]="true"
+      [enableSorting]="true"
+      filterPlaceholder="Search all columns"
+      [enableStyles]="true"
+      (sortChange)="onSortChange($event)"
+      (filterChange)="onFilterChange($event)"
+      (pageChange)="onPageChange($event)"
+    ></vikram-tables>
+  </section>
+</main>

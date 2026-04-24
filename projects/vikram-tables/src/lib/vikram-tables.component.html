@@ -1,0 +1,93 @@
+<div class="vikram-table-wrapper" [ngClass]="{ 'vikram-table--styled': enableStyles }">
+  <div class="vikram-table-toolbar" *ngIf="enableGlobalSearch || enableColumnFilters">
+    <div class="vikram-table-search" *ngIf="enableGlobalSearch">
+      <input
+        type="search"
+        [placeholder]="filterPlaceholder"
+        [(ngModel)]="globalSearchTerm"
+        (ngModelChange)="updateGlobalSearch($event)"
+        aria-label="Global search"
+      />
+    </div>
+  </div>
+
+  <div class="vikram-table-container">
+    <table class="vikram-table">
+      <thead>
+        <tr>
+          <th
+            *ngFor="let column of columns"
+            [style.width]="column.width"
+            [ngClass]="[column.headerClass, enableSorting && column.sortable ? 'sortable' : '']"
+          >
+            <button
+              type="button"
+              class="vikram-table-header-button"
+              [disabled]="!enableSorting || !column.sortable"
+              (click)="toggleSort(column)"
+              [attr.aria-sort]="sortField === column.field ? sortDirection || 'none' : 'none'"
+            >
+              <span>{{ column.header }}</span>
+              <span class="vikram-table-sort-icon" *ngIf="enableSorting && column.sortable">
+                <span *ngIf="sortField !== column.field">↕</span>
+                <span *ngIf="sortField === column.field && sortDirection === 'asc'">▲</span>
+                <span *ngIf="sortField === column.field && sortDirection === 'desc'">▼</span>
+              </span>
+            </button>
+          </th>
+        </tr>
+        <tr *ngIf="enableColumnFilters">
+          <th *ngFor="let column of columns">
+            <input
+              *ngIf="column.filterable"
+              type="search"
+              [placeholder]="'Filter ' + column.header"
+              [ngModel]="columnFilters[toField(column.field)] || ''"
+              (ngModelChange)="updateColumnFilter(toField(column.field), $event)"
+              [attr.aria-label]="'Filter ' + column.header"
+            />
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of displayedData; trackBy: trackByIndex">
+          <td *ngFor="let column of columns" [ngClass]="column.cellClass">
+            <ng-container *ngIf="column.template; else defaultCell">
+              <ng-container
+                *ngTemplateOutlet="column.template; context: { $implicit: getCellValue(row, column), row: row, column: column }"
+              ></ng-container>
+            </ng-container>
+            <ng-template #defaultCell>
+              <span>{{ formatCellValue(getCellValue(row, column), column.type) }}</span>
+            </ng-template>
+          </td>
+        </tr>
+        <tr *ngIf="displayedData.length === 0">
+          <td [attr.colspan]="columns.length" class="vikram-table-empty">
+            {{ noDataMessage }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="vikram-table-footer">
+    <div class="vikram-table-summary">
+      <span>{{ totalRecords }} record{{ totalRecords === 1 ? '' : 's' }}</span>
+      <span *ngIf="totalRecords > 0"> | Page {{ currentPage }} of {{ pageCount }}</span>
+    </div>
+    <div class="vikram-table-pagination" *ngIf="totalRecords > 0">
+      <button type="button" (click)="changePage(1)" [disabled]="currentPage === 1">First</button>
+      <button type="button" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+      <button type="button" (click)="changePage(currentPage + 1)" [disabled]="currentPage === pageCount">Next</button>
+      <button type="button" (click)="changePage(pageCount)" [disabled]="currentPage === pageCount">Last</button>
+
+      <label class="vikram-table-page-size">
+        Rows:
+        <select [ngModel]="pageSize" (ngModelChange)="changePageSize($event)">
+          <option *ngFor="let size of pageSizeOptions" [ngValue]="size">{{ size }}</option>
+        </select>
+      </label>
+    </div>
+  </div>
+</div>

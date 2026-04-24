@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+.demo-shell {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.demo-card {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 18px 60px rgba(15, 23, 42, 0.08);
+}
+
+.demo-header {
+  margin-bottom: 1.5rem;
+}
+
+.demo-header h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.75rem, 2.5vw, 2.5rem);
+}
+
+.demo-header p {
+  margin: 0;
+  color: #475569;
+}
